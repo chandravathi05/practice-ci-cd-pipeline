@@ -1,0 +1,29 @@
+name: practice-ci-pipeline
+on: 
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+  steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11' 
+        
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+      
+    - name: Run python file  
+      run: python app.py               
+
+    - name: Build Docke image 
+      run: docker build -t practice-ci . 
+
+    - name: Show Docker images 
+      run: docker images
